@@ -1,24 +1,11 @@
 package mesosphere.marathon.client;
 
-import java.util.List;
+import feign.RequestLine;
+import mesosphere.marathon.client.model.v2.*;
+import mesosphere.marathon.client.utils.MarathonException;
 
 import javax.inject.Named;
-
-import mesosphere.marathon.client.model.v2.App;
-import mesosphere.marathon.client.model.v2.DeleteAppTaskResponse;
-import mesosphere.marathon.client.model.v2.DeleteAppTasksResponse;
-import mesosphere.marathon.client.model.v2.Deployment;
-import mesosphere.marathon.client.model.v2.GetAppResponse;
-import mesosphere.marathon.client.model.v2.GetAppTasksResponse;
-import mesosphere.marathon.client.model.v2.GetAppsResponse;
-import mesosphere.marathon.client.model.v2.GetEventSubscriptionRegisterResponse;
-import mesosphere.marathon.client.model.v2.GetEventSubscriptionsResponse;
-import mesosphere.marathon.client.model.v2.GetServerInfoResponse;
-import mesosphere.marathon.client.model.v2.GetTasksResponse;
-import mesosphere.marathon.client.model.v2.Group;
-import mesosphere.marathon.client.model.v2.Result;
-import mesosphere.marathon.client.utils.MarathonException;
-import feign.RequestLine;
+import java.util.List;
 
 public interface Marathon {
     // Apps
@@ -64,7 +51,11 @@ public interface Marathon {
 	@RequestLine("GET /v2/groups/{id}")
 	Group getGroup(@Named("id") String id) throws MarathonException;
 
-    // Tasks
+	@RequestLine("PUT /v2/groups/{id}")
+	void updateGroup(@Named("id") String id, Group group) throws MarathonException;
+
+	@RequestLine("PUT /v2/groups/{id}?force={force}")
+	void updateGroup(@Named("id") String id, Group group, @Named("force") boolean force) throws MarathonException;
 
     // Deployments
 	@RequestLine("GET /v2/deployments")
@@ -93,7 +84,8 @@ public interface Marathon {
     @RequestLine("GET /v2/info")
     GetServerInfoResponse getServerInfo();
 
-    // Miscellaneous
+
+	// Miscellaneous
 
 
 }

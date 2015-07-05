@@ -1,11 +1,11 @@
 package mesosphere.marathon.client.model.v2;
 
+import mesosphere.marathon.client.utils.ModelUtils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
-import mesosphere.marathon.client.utils.ModelUtils;
 
 public class App {
 	private String id;
@@ -22,7 +22,10 @@ public class App {
 	private Collection<Task> tasks;
 	private Integer tasksStaged;
 	private Integer tasksRunning;
+	private Map<String, String> labels;
 	private List<HealthCheck> healthChecks;
+	private List<String> dependencies;
+	private AppUpgradeStrategy upgradeStrategy;
 
 	public String getId() {
 		return id;
@@ -161,12 +164,42 @@ public class App {
 		this.tasksRunning = tasksRunning;
 	}
 
+	public Map<String, String> getLabels()
+	{
+		return labels;
+	}
+
+	public void setLabels(Map<String, String> labels)
+	{
+		this.labels = labels;
+	}
+
 	public List<HealthCheck> getHealthChecks() {
 		return healthChecks;
 	}
 
 	public void setHealthChecks(List<HealthCheck> healthChecks) {
 		this.healthChecks = healthChecks;
+	}
+
+	public List<String> getDependencies()
+	{
+		return dependencies;
+	}
+
+	public void setDependencies(List<String> dependencies)
+	{
+		this.dependencies = dependencies;
+	}
+
+	public AppUpgradeStrategy getUpgradeStrategy()
+	{
+		return upgradeStrategy;
+	}
+
+	public void setUpgradeStrategy(AppUpgradeStrategy upgradeStrategy)
+	{
+		this.upgradeStrategy = upgradeStrategy;
 	}
 
 	@Override
